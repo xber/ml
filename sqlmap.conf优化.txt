@@ -1,0 +1,27 @@
+1 修改注入模式
+
+修改tech = BEUSTQ，可以修改为tech = UESBTQ
+
+2 最大测试注入等级
+
+修改level = 1，可以修改为level = 5
+
+3 最大测试风险等级
+
+修改risk = 1，可以修改为risk = 3
+
+4 联合sql注入查询的范围
+
+修改uCols = ，可以修改为uCols = 50
+
+5 延迟DBMS的回应10秒
+
+修改timeSec = 5，可以修改为timeSec = 10
+
+6 线程最大修改为5
+
+修改threads = 1，可以修改为threads = 5
+
+7 HTTP请求延迟（waf）
+
+修改delay = 0，可以修改为delay = 2

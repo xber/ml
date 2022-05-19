@@ -1,0 +1,31 @@
+每次祭出神器SqlMap疯狂脱裤的时候，发起的请求会带着sqlmap默认的user-agent，这样等裤子脱完了，水表也被查了，所以在用sqlmap的时候不得不把默认的user-agent给改掉，以下提供两种修改方法
+
+1.用自带参数修改
+默认情况下sqlmap的HTTP请求头中User-Agent值是：
+
+sqlmap/1.0-dev-xxxxxxx (http://sqlmap.org)
+
+可以使用–user-anget参数来修改，同时也可以使用–random-agnet参数来随机的从./txt/user-agents.txt中获取。
+当–level参数设定为3或者3以上的时候，会尝试对User-Angent进行注入。
+
+2.修改源代码
+打开sql目录下的\lib\core\option.py
+翻到def _defaultHTTPUserAgent()函数，1231行，找到函数末尾
+把
+
+return “%s (%s)” % (VERSION_STRING, SITE)
+
+替换修改为：
+
+return "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"
+return "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+return "Googlebot/2.1 (+http://www.google.com/bot.html)"
+本人推选使用第二种方法，一次修改终身受益，不用每次添加参数修改！
+这样一来，下次脱裤就没那么容易被查出水表的位置了！
+
+移动 UA
+
+Mozilla/5.0 (Linux;u;Android 4.2.2;zh-cn;) AppleWebKit/534.46 (KHTML,like Gecko) Version/5.1 Mobile Safari/10600.6.3 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)
+PC UA
+
+Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)

@@ -1,0 +1,25 @@
+Google 常用语法
+
+inurl:.asp?
+inurl:php?id=
+intext:
+intitle:
+filetype:txt vps
+
+Baidu的常用语法
+
+inurl:robots.txt
+inurl:login.action
+inurl:/member
+inurl:/membercenter
+
+site:www.xxx.com inurl:fckeditor
+
+site:site.com
+site:xx.com login
+site:xx.com admin
+site:xx.com 管理
+site:xx.com 登录
+
+DDOS
+Google搜索“DDoS booter”或“DDoS Stresser”
